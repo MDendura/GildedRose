@@ -19,7 +19,7 @@ namespace GildedRose.Tests
         [InlineData(1, 2)]
         [InlineData(10, 10)]
         [InlineData(int.MaxValue, 5)]
-        public void UpdateQuality_BeforeSellByDate_DecrementsQualityBy1(int sellIn, int quality)
+        public void UpdateItem_BeforeSellByDate_DecrementsQualityBy1(int sellIn, int quality)
         {
             // Arrange
             var item = new Item
@@ -46,7 +46,7 @@ namespace GildedRose.Tests
         [InlineData(-1, 2)]
         [InlineData(-10, 10)]
         [InlineData(-50, 5)]
-        public void UpdateQuality_AfterSellByDate_DecrementsQualityBy2(int sellIn, int quality)
+        public void UpdateItem_AfterSellByDate_DecrementsQualityBy2(int sellIn, int quality)
         {
             // Arrange
             var item = new Item
@@ -70,7 +70,7 @@ namespace GildedRose.Tests
         [Theory]
         [InlineData(2)]
         [InlineData(-2)]
-        public void UpdateQuality_Quality_NotChangedToNegative(int sellIn)
+        public void UpdateItem_Quality_NotChangedToNegative(int sellIn)
         {
             // Arrange
             var item = new Item
@@ -99,7 +99,7 @@ namespace GildedRose.Tests
         [InlineData(-1, 2)]
         [InlineData(-10, 10)]
         [InlineData(-50, 5)]
-        public void UpdateQuality_AgedBrie_QualityIncreaseWithAge(int sellIn, int quality)
+        public void UpdateItem_AgedBrie_QualityIncreaseWithAge(int sellIn, int quality)
         {
             // Arrange
             var item = new Item
@@ -126,7 +126,7 @@ namespace GildedRose.Tests
         [InlineData(0)]
         [InlineData(10)]
         [InlineData(-10)]
-        public void UpdateQuality_StandardItem_QualityNotChangedAbove50(int sellIn)
+        public void UpdateItem_StandardItem_QualityNotChangedAbove50(int sellIn)
         {
             // Arrange
             var item = new Item
@@ -147,7 +147,7 @@ namespace GildedRose.Tests
         /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not modify legendary items.
         /// </summary>
         [Fact]
-        public void UpdateQuality_LegendaryItem_NotChanged()
+        public void UpdateItem_LegendaryItem_NotChanged()
         {
             // Arrange
             const string LegendaryItemName = "Sulfuras, Hand of Ragnaros";
@@ -179,7 +179,7 @@ namespace GildedRose.Tests
         [InlineData(0)]
         [InlineData(-10)]
         [InlineData(-100)]
-        public void UpdateQuality_BackstagePassNegativeSellIn_SetsQuality0(int sellIn)
+        public void UpdateItem_BackstagePassNegativeSellIn_SetsQuality0(int sellIn)
         {
             // Arrange
             var item = new Item
@@ -216,7 +216,7 @@ namespace GildedRose.Tests
         [InlineData(5, 10, 3)]
         [InlineData(3, 20, 3)]
         [InlineData(1, 0, 3)]
-        public void UpdateQuality_BackstagePassSellInLessThan10_QualityIncrease2(int sellIn, int quality, int expectedIncrease)
+        public void UpdateItem_BackstagePassSellInLessThan10_QualityIncrease2(int sellIn, int quality, int expectedIncrease)
         {
             // Arrange
             var item = new Item
@@ -242,7 +242,7 @@ namespace GildedRose.Tests
         [InlineData(10, 8)]
         [InlineData(5, 3)]
         [InlineData(0, 0)]
-        public void UpdateQuality_ConjuredItem_QualityDecreasesBy2(int startingQuality, int expectedQuality)
+        public void UpdateItem_ConjuredItem_QualityDecreasesBy2(int startingQuality, int expectedQuality)
         {
             // Arrange
             var item = new Item
@@ -250,6 +250,31 @@ namespace GildedRose.Tests
                 Name = "Conjured Armour of Perception +1",
                 Quality = startingQuality,
                 SellIn = 10
+            };
+
+            // Act
+            Program.UpdateItem(item);
+
+            // Assert
+            Assert.Equal(expectedQuality, item.Quality);
+        }
+
+        /// <summary>
+        /// Tests that <see cref="Program.UpdateQuality(Item)"/> decreases <see cref="Item.Quality"/> by 3
+        /// for Conjured items that have passed their sell by date.
+        /// </summary>
+        /// <param name="startingQuality">Test data for <see cref="Item.Quality"/></param>
+        /// <param name="expectedQuality">Expected output quality</param>
+        [Theory]
+        [InlineData(3, 0)]
+        public void UpdateItem_ConjuredItemExpired_QualityDecreasesBy3(int startingQuality, int expectedQuality)
+        {
+            // Arrange
+            var item = new Item
+            {
+                Name = "Conjured Armour of Perception +1",
+                Quality = startingQuality,
+                SellIn = -1
             };
 
             // Act

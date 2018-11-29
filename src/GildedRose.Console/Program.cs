@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace GildedRose.Console
+﻿namespace GildedRose.Console
 {
+    using System.Collections.Generic;
+    using GildedRose.Models;
+
     public class Program
     {
         private static IList<Item> Items = new List<Item>
@@ -99,14 +100,4 @@ namespace GildedRose.Console
             }
         }
     }
-
-    public class Item
-    {
-        public string Name { get; set; }
-
-        public int SellIn { get; set; }
-
-        public int Quality { get; set; }
-    }
-
 }

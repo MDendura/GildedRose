@@ -138,5 +138,32 @@ namespace GildedRose.Tests
             // Assert
             Assert.True(item.Quality <= 50);
         }
+
+        /// <summary>
+        /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not modify legendary items.
+        /// </summary>
+        [Fact]
+        public void UpdateQuality_LegendaryItem_NotChanged()
+        {
+            // Arrange
+            const string LegendaryItemName = "Sulfuras, Hand of Ragnaros";
+            const int StartingQuality = 99;
+            const int StartingSellIn = 20;
+
+            var item = new Item
+            {
+                Name = "Sulfuras, Hand of Ragnaros",
+                Quality = StartingQuality,
+                SellIn = StartingSellIn
+            };
+
+            // Act
+            Program.UpdateQuality(item);
+
+            // Assert
+            Assert.Equal(LegendaryItemName, item.Name);
+            Assert.Equal(StartingQuality, item.Quality);
+            Assert.Equal(StartingSellIn, item.SellIn);
+        }
     }
 }

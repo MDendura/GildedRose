@@ -31,7 +31,7 @@
 
             foreach (var item in Items)
             {
-                UpdateItemQuality(item);
+                UpdateItem(item);
             }
 
             Console.ReadKey();
@@ -41,7 +41,7 @@
         /// Updates the <see cref="Item.Quality"/> and <see cref="Item.SellIn"/> values of the given item.
         /// </summary>
         /// <param name="item">Item to be updated.</param>
-        public static void UpdateItemQuality(Item item)
+        public static void UpdateItem(Item item)
         {
             switch (item.GetItemType())
             {
@@ -112,22 +112,33 @@
         /// <param name="item">Timed item to be updated.</param>
         public static void UpdateTimedItem(Item item)
         {
-            if (item.Quality < 49)
+            if (item.Quality < 50)
             {
                 item.Quality = item.Quality + 1;
 
                 if (item.SellIn < 11)
                 {
-                    item.Quality = item.Quality + 1;
+                    if (item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
                 }
 
                 if (item.SellIn < 6)
                 {
-                    item.Quality = item.Quality + 1;
+                    if (item.Quality < 50)
+                    {
+                        item.Quality = item.Quality + 1;
+                    }
                 }
             }
 
             item.SellIn = item.SellIn - 1;
+
+            if (item.SellIn < 0)
+            {
+                item.Quality = item.Quality - item.Quality;
+            }
         }
 
         /// <summary>
@@ -145,83 +156,6 @@
             if (item.SellIn < 0 && item.Quality > 0)
             {
                 item.Quality = item.Quality - 1;
-            }
-        }
-
-        /// <summary>
-        /// Old implementation of logic to update item quality and expiry.
-        /// </summary>
-        /// <param name="item">Item to be updated.</param>
-        public static void UpdateQuality(Item item)
-        {
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
-            {
-                if (item.Quality > 0)
-                {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
-                    {
-                        item.Quality = item.Quality - 1;
-                    }
-                }
-            }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality = item.Quality + 1;
-
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality = item.Quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
-            {
-                item.SellIn = item.SellIn - 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != "Aged Brie")
-                {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
-                    {
-                        if (item.Quality > 0)
-                        {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
-                            {
-                                item.Quality = item.Quality - 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality = item.Quality - item.Quality;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality = item.Quality + 1;
-                    }
-                }
             }
         }
     }

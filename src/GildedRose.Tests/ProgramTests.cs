@@ -30,7 +30,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.Equal(quality - 1, item.Quality);
@@ -57,7 +57,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.Equal(quality - 2, item.Quality);
@@ -81,7 +81,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.True(item.Quality >= 0);
@@ -110,7 +110,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.True(item.SellIn < sellIn);
@@ -137,7 +137,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.True(item.Quality <= 50);
@@ -162,7 +162,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.Equal(LegendaryItemName, item.Name);
@@ -190,7 +190,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.Equal(0, item.Quality);
@@ -227,7 +227,7 @@ namespace GildedRose.Tests
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
             Assert.Equal(quality + expectedIncrease, item.Quality);
@@ -236,26 +236,27 @@ namespace GildedRose.Tests
         /// <summary>
         /// Tests that <see cref="Program.UpdateQuality(Item)"/> decreases <see cref="Item.Quality"/> by 2 for Conjured items
         /// </summary>
-        /// <param name="quality">Test data for <see cref="Item.Quality"/></param>
-        [Theory(Skip = "Conjured items are not yet implemented")]
-        [InlineData(10)]
-        [InlineData(5)]
-        [InlineData(0)]
-        public void UpdateQuality_ConjuredItem_QualityDecreasesBy2(int quality)
+        /// <param name="startingQuality">Test data for <see cref="Item.Quality"/></param>
+        /// <param name="expectedQuality">Expected output quality</param>
+        [Theory]
+        [InlineData(10, 8)]
+        [InlineData(5, 3)]
+        [InlineData(0, 0)]
+        public void UpdateQuality_ConjuredItem_QualityDecreasesBy2(int startingQuality, int expectedQuality)
         {
             // Arrange
             var item = new Item
             {
                 Name = "Conjured Armour of Perception +1",
-                Quality = quality,
+                Quality = startingQuality,
                 SellIn = 10
             };
 
             // Act
-            Program.UpdateQuality(item);
+            Program.UpdateItem(item);
 
             // Assert
-            Assert.Equal(quality - 2, item.Quality);
+            Assert.Equal(expectedQuality, item.Quality);
         }
     }
 }

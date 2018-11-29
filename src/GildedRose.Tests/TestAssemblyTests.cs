@@ -59,5 +59,29 @@ namespace GildedRose.Tests
             // Assert
             Assert.Equal(startingQuality - 2, item.Quality);
         }
+
+        /// <summary>
+        /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not set the quality to a negative value.
+        /// </summary>
+        /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
+        [Theory]
+        [InlineData(2)]
+        [InlineData(-2)]
+        public void UpdateQuality_Quality_NotChangedToNegative(int sellIn)
+        {
+            // Arrange
+            var item = new Item
+            {
+                Name = "Poor quality item",
+                Quality = 0,
+                SellIn = sellIn
+            };
+
+            // Act
+            Program.UpdateQuality(item);
+
+            // Assert
+            Assert.True(item.Quality >= 0);
+        }
     }
 }

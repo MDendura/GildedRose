@@ -191,5 +191,41 @@ namespace GildedRose.Tests
             // Assert
             Assert.Equal(0, item.Quality);
         }
+
+        /// <summary>
+        /// Tests that <see cref="Program.UpdateQuality(Item)"/> increases <see cref="Item.Quality"/> by the given amount when
+        /// <see cref="Item.SellIn"/> is between 0 and 10.
+        /// <example>
+        /// <list type="bullet">
+        ///     <value>0-5 - Increases by 3</value>
+        ///     <value>5-10 - Increases by 2</value>
+        /// </list>
+        /// </example>
+        /// </summary>
+        /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
+        /// <param name="quality">Test data for <see cref="Item.Quality"/></param>
+        [Theory]
+        [InlineData(10, 10, 2)]
+        [InlineData(8, 20, 2)]
+        [InlineData(6, 0, 2)]
+        [InlineData(5, 10, 3)]
+        [InlineData(3, 20, 3)]
+        [InlineData(1, 0, 3)]
+        public void UpdateQuality_BackstagePassSellInLessThan10_QualityIncrease2(int sellIn, int quality, int expectedIncrease)
+        {
+            // Arrange
+            var item = new Item
+            {
+                Name = "Backstage passes to a TAFKAL80ETC concert",
+                Quality = quality,
+                SellIn = sellIn
+            };
+
+            // Act
+            Program.UpdateQuality(item);
+
+            // Assert
+            Assert.Equal(quality + expectedIncrease, item.Quality);
+        }
     }
 }

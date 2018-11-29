@@ -87,8 +87,8 @@ namespace GildedRose.Tests
         /// Tests that <see cref="Program.UpdateQuality(Item)"/> increases the quality for Aged Brie as
         /// the age increases.
         /// </summary>
-        /// <param name="sellIn"></param>
-        /// <param name="quality"></param>
+        /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
+        /// <param name="quality">Test data for <see cref="Item.Quality"/></param>
         [Theory]
         [InlineData(2, 5)]
         [InlineData(0, 10)]
@@ -111,6 +111,32 @@ namespace GildedRose.Tests
             // Assert
             Assert.True(item.SellIn < sellIn);
             Assert.True(item.Quality > quality);
+        }
+
+        /// <summary>
+        /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not increase standard item quality
+        /// above 50.
+        /// </summary>
+        /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
+        [Theory]
+        [InlineData(0)]
+        [InlineData(10)]
+        [InlineData(-10)]
+        public void UpdateQuality_StandardItem_QualityNotChangedAbove50(int sellIn)
+        {
+            // Arrange
+            var item = new Item
+            {
+                Name = "Standard Item",
+                Quality = 50,
+                SellIn = sellIn
+            };
+
+            // Act
+            Program.UpdateQuality(item);
+
+            // Assert
+            Assert.True(item.Quality <= 50);
         }
     }
 }

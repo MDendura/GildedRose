@@ -165,5 +165,31 @@ namespace GildedRose.Tests
             Assert.Equal(StartingQuality, item.Quality);
             Assert.Equal(StartingSellIn, item.SellIn);
         }
+
+        /// <summary>
+        /// Tests that <see cref="Program.UpdateQuality(Item)"/> sets <see cref="Item.Quality"/> to 0
+        /// for backstage passes are the sell by date has expired.
+        /// </summary>
+        /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
+        [Theory]
+        [InlineData(0)]
+        [InlineData(-10)]
+        [InlineData(-100)]
+        public void UpdateQuality_BackstagePassNegativeSellIn_SetsQuality0(int sellIn)
+        {
+            // Arrange
+            var item = new Item
+            {
+                Name = "Backstage passes to a TAFKAL80ETC concert",
+                Quality = 30,
+                SellIn = sellIn
+            };
+
+            // Act
+            Program.UpdateQuality(item);
+
+            // Assert
+            Assert.Equal(0, item.Quality);
+        }
     }
 }

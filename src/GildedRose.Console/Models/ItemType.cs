@@ -1,4 +1,4 @@
-﻿namespace GildedRose.Models
+﻿namespace GildedRose.Console.Models
 {
     /// <summary>
     /// Indicates the inventory update strategy for a given <see cref="Item"/>.

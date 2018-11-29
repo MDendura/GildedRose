@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using GildedRose.Models;
+    using GildedRose.Console.Models;
 
     /// <summary>
     /// Application to update the inventory of the Gilded Rose.
     /// </summary>
-    public class Program
+    public static class Program
     {
         /// <summary>
         /// Collection of items stocked by the Gilded Rose.

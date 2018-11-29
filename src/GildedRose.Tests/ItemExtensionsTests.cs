@@ -1,7 +1,7 @@
 ﻿namespace GildedRose.Tests
 {
     using GildedRose.Console;
-    using GildedRose.Models;
+    using GildedRose.Console.Models;
     using Xunit;
 
     /// <summary>

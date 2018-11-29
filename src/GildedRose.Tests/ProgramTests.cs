@@ -1,7 +1,7 @@
 namespace GildedRose.Tests
 {
     using GildedRose.Console;
-    using GildedRose.Models;
+    using GildedRose.Console.Models;
     using Xunit;
 
     /// <summary>
@@ -10,7 +10,7 @@ namespace GildedRose.Tests
     public class ProgramTests
     {
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> reduces an item's quality by
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> reduces an item's quality by
         /// 1 if the sell by date has not yet passed
         /// </summary>
         /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
@@ -37,7 +37,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> reduces an item's quality by
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> reduces an item's quality by
         /// 2 if the sell by date has passed
         /// </summary>
         /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
@@ -64,7 +64,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not set the quality to a negative value.
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> does not set the quality to a negative value.
         /// </summary>
         /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
         [Theory]
@@ -88,7 +88,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> increases the quality for Aged Brie as
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> increases the quality for Aged Brie as
         /// the age increases
         /// </summary>
         /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
@@ -118,7 +118,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not increase standard item quality
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> does not increase standard item quality
         /// above 50
         /// </summary>
         /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
@@ -144,7 +144,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> does not modify legendary items.
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> does not modify legendary items.
         /// </summary>
         [Fact]
         public void UpdateItem_LegendaryItem_NotChanged()
@@ -171,7 +171,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> sets <see cref="Item.Quality"/> to 0
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> sets <see cref="Item.Quality"/> to 0
         /// for backstage passes are the sell by date has expired
         /// </summary>
         /// <param name="sellIn">Test data for <see cref="Item.SellIn"/></param>
@@ -197,7 +197,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> increases <see cref="Item.Quality"/> by the given amount when
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> increases <see cref="Item.Quality"/> by the given amount when
         /// <see cref="Item.SellIn"/> is between 0 and 10
         /// <example>
         ///   <list type="bullet">
@@ -234,7 +234,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> decreases <see cref="Item.Quality"/> by 2 for Conjured items
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> decreases <see cref="Item.Quality"/> by 2 for Conjured items
         /// </summary>
         /// <param name="startingQuality">Test data for <see cref="Item.Quality"/></param>
         /// <param name="expectedQuality">Expected output quality</param>
@@ -260,7 +260,7 @@ namespace GildedRose.Tests
         }
 
         /// <summary>
-        /// Tests that <see cref="Program.UpdateQuality(Item)"/> decreases <see cref="Item.Quality"/> by 3
+        /// Tests that <see cref="Program.UpdateItem(Item)"/> decreases <see cref="Item.Quality"/> by 3
         /// for Conjured items that have passed their sell by date.
         /// </summary>
         /// <param name="startingQuality">Test data for <see cref="Item.Quality"/></param>

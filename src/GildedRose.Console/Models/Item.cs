@@ -1,4 +1,4 @@
-﻿namespace GildedRose.Models
+﻿namespace GildedRose.Console.Models
 {
     /// <summary>
     /// Inventory item sold by the Gilded Rose.

@@ -1,7 +1,7 @@
 ﻿namespace GildedRose.Console
 {
     using System;
-    using GildedRose.Models;
+    using GildedRose.Console.Models;
 
     /// <summary>
     /// Extension methods for the <see cref="Item"/> class.

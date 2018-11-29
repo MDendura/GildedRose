@@ -15,23 +15,27 @@
         /// <returns>Matching strategy.</returns>
         public static ItemType GetItemType(this Item item)
         {
-            switch (item)
+            if (item.Quality > 50)
             {
-                case Item i when i.Quality > 50:
-                    return ItemType.Legendary;
-
-                case Item i when i.Name.ToLowerInvariant().Contains("conjured"):
-                    return ItemType.Conjured;
-
-                case Item i when i.Name.Equals("Aged Brie", StringComparison.InvariantCulture):
-                    return ItemType.Maturing;
-
-                case Item i when i.Name.Equals("Backstage passes to a TAFKAL80ETC concert", StringComparison.InvariantCulture):
-                    return ItemType.Timed;
-
-                default:
-                    return ItemType.Standard;
+                return ItemType.Legendary;
             }
+
+            if (item.Name.ToLowerInvariant().Contains("conjured"))
+            {
+                return ItemType.Conjured;
+            }
+
+            if (item.Name.Equals("Aged Brie", StringComparison.InvariantCulture))
+            {
+                return ItemType.Maturing;
+            }
+
+            if (item.Name.Equals("Backstage passes to a TAFKAL80ETC concert", StringComparison.InvariantCulture))
+            {
+                return ItemType.Timed;
+            }
+
+            return ItemType.Standard;
         }
     }
 }
